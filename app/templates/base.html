@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title> {{ title }}</title>
+    {% else %}
+        <title>Добро пожаловать</title>
+    {% endif %}
+</head>
+<body>
+
+    <table>
+        <td><a href="{{url_for('index')}}">Главная</a></td>
+        {% if not current_user.is_authenticated %}
+            <td><a href="{{url_for('login')}}">Войти</a></td>
+            <td><a href="{{url_for('register')}}">Регистрация</a></td>
+            
+        {% else %}
+            <td><a href="{{url_for('logout')}}">Выйти</a></td>            
+        {% endif %}
+        
+    </table>
+    <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li style="color: red;">{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+
+    {% block content %}
+        
+    {% endblock %}
+</body>
+</html>
