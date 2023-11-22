@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Моя страница</h1>
+    <table>
+        <tr>
+            <td>Имя:</td>
+            <td><b>{{user.username}}</b></td>
+        </tr>
+        
+        <tr>
+            <td>E-mail:</td>
+            <td><b>{{user.email}}</b></td>
+        </tr>
+
+        <tr>
+            <td>Обо мне</td>
+            <td><b>{{user.about_me}}</b></td>
+        </tr>
+
+        <tr>
+            <td>Был в сети в :</td>
+            <td><b>{{user.last_seen}}</b></td>
+        </tr>
+        <td><a href="{{url_for('edit_profile')}}">Изменить</a></td>  
+    </table>
+{% endblock %}

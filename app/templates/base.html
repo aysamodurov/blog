@@ -13,11 +13,12 @@
 
     <table>
         <td><a href="{{url_for('index')}}">Главная</a></td>
-        {% if not current_user.is_authenticated %}
+        {% if current_user.is_anonymous %}
             <td><a href="{{url_for('login')}}">Войти</a></td>
             <td><a href="{{url_for('register')}}">Регистрация</a></td>
             
         {% else %}
+            <td><a href="{{url_for('profile', username=current_user.username)}}">Личный кабинет</a></td>  
             <td><a href="{{url_for('logout')}}">Выйти</a></td>            
         {% endif %}
         

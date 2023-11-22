@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(128), nullable=False)
     email= db.Column(db.String, unique=True, nullable=False)
     last_seen =db.Column(db.DateTime,default=datetime.utcnow)
+    about_me = db.Column(db.String)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -24,3 +25,4 @@ class User(db.Model, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
