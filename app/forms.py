@@ -41,3 +41,9 @@ class EditForm(FlaskForm):
             user = User.query.filter_by(username=username.data).first()
             if user is not None or username:
                 raise ValidationError('Имя пользовтеля {} уже занято'.format(username.data))
+
+
+class AddPostForm(FlaskForm):
+    title = StringField('Заголовок', validators=[DataRequired()])
+    body = TextAreaField('Сообщение', validators=[Length(min=0, max=200)])
+    submit = SubmitField('Опубликовать')
