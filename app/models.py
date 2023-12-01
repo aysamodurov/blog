@@ -31,9 +31,6 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def __repr__(self):
-        return "<User: {} , email: {}>".format(self.username, self.email)
-
     def follow(self, user):
         if not self.is_following(user):
             self.followed.append(user)
@@ -51,6 +48,9 @@ class User(db.Model, UserMixin):
             followers.c.follower_id == self.id)
         own_post = self.posts
         return followed_post.union(own_post).order_by(Post.dt.desc())
+
+    def __repr__(self):
+        return "<User: {} , email: {}>".format(self.username, self.email)
 
 
 @login_manager.user_loader
