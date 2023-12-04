@@ -19,7 +19,7 @@
             <tr>
                 <td> {{form.about_me.label}} </td>
                 <td> {{form.about_me(cols=50, row=4)}} </td>
-                <td>x
+                <td>
                 {% for error in form.about_me.errors %}
                     <span style="color: red;">[{{error}}]</span>
                 {% endfor %}

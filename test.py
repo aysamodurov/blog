@@ -4,7 +4,7 @@ os.environ['DATABASE_URL'] = 'sqlite://'
 
 import unittest
 from app import app, db
-from app.models import User
+from app.models import User, Post
 
 
 class UserModelCase(unittest.TestCase):
@@ -53,6 +53,29 @@ class UserModelCase(unittest.TestCase):
         self.assertFalse(u2.is_following(u1))
         self.assertEqual(u2.follower.all(), [])
 
+    def test_followed_post(self):
+        u1 = User(username='alex', email='alex@mail.ru')
+        u1.set_password('111')
+        u2 = User(username='zender', email='zender@mail.ru')
+        u2.set_password('fsg')
+        
+        db.session.add(u1)
+        db.session.add(u2)
+        db.session.commit()
+        
+        u2.follow(u1)
+        
+        post1 = Post(title='Title post user1', body='First post user 1')
+        u1.posts.append(post1)
+        
+        post2 = Post(title='Title post user2', body='First post user 2')
+        u1.posts.append(post2)
+
+        db.session.commit()
+        self.assertListEqual([post2,post1], u2.followed_posts().all())
+        
+        u2.unfollow(u1)
+        self.assertEqual(u2.followed_posts().all(), [])
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
