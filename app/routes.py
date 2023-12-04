@@ -91,9 +91,8 @@ def edit_profile():
 def add_post():
     form = AddPostForm()
     if form.validate_on_submit():
-        post = Post(title = form.title.data, body = form.body.data)
+        post = Post(title = form.title.data, body = form.body.data, author=current_user)
         db.session.add(post)
-        current_user.posts.append(post)
         db.session.commit()
         return redirect(url_for('profile', username=current_user.username))
     return render_template('new_post.html', title='Новый пост', form=form)        
@@ -113,8 +112,18 @@ def delete_post(id):
 @app.route('/follow/<id>')
 def follow(id):
     user = User.query.get(int(id))
-    print(user)
-    print(current_user)
     current_user.follow(user)
     db.session.commit()
     return redirect(url_for('profile', username=user.username))
+
+@app.route('/unfollow/<id>')
+def unfollow(id):
+    user = User.query.get(int(id))
+    current_user.unfollow(user)
+    db.session.commit()
+    return redirect(url_for('profile', username=user.username))
+
+@app.route('/explore')
+def explore():
+    posts = Post.query.order_by(Post.dt.desc()).all()
+    return render_template('index.html', title='Все посты', posts=posts)

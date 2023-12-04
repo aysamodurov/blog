@@ -29,25 +29,21 @@
         <tr>
             <td><a href="{{url_for('edit_profile')}}">Изменить </a></td>  
             
-            {% if user == current_user  %}
+            {% if user == current_user %}
                 <td><a href="{{url_for('add_post')}}">Новый пост</a></td>
+            {% elif current_user.is_following(user) %}
+                <td><a href="{{url_for('unfollow', id=user.id)}}">Отписаться</a></td>
             {% else %}
                 <td><a href="{{url_for('follow', id=user.id)}}">Подписаться</a></td>
             {% endif %}
-
         </tr>
     </table>
 
-
-    {% if user.follower %}
-        <h2>Подписчики:</h2>
+    {% if user.follower.first() %}
+        <h2>Подписчики:</h2> 
         <table>
-            {% for follower in user.follower %}
-            <div class="post">
-                <p>{{follower.username}}</p>
-                <p>{{follower.about_me}}</p>
-                <br>
-            </div>
+            {% for miniuser in user.follower %}
+                {% include '_miniuser.html'  %}
             {% endfor %}
         </table>
     {% else %}
@@ -61,12 +57,7 @@
         <h2>Посты:</h2>
         <table>
             {% for post in posts %}
-            <div class="post">
-                <p>{{post.title}}</p>
-                <p>{{post.body}}</p>
-                <p><a href="{{url_for('delete_post', id=post.id)}}">Удалить</a></p>
-                <br>
-            </div>
+            {% include '_post.html' %}
             {% endfor %}
         </table>
     {% else %}

@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Главная</h1>
-    <h2>Я подписан на</h2>
-    {% for followed_user in followed_users %}
-        {{followed_user.username}}
-        <br>
-    {% endfor %}
+    {% if followed_users %}
+        <h2>Посты от пользователей:</h2>
+        {% for miniuser in followed_users %}
+            {% include '_miniuser.html'   %}
+        {% endfor %}
+
+    {% endif %}
+    
 
     <h2>Последние новости</h2>
     {% for post in posts %}
-    <div class="post" style=" width: 300px; border: 1px; padding: 5px; margin: 3px; border-style: solid;">
-        {{post.title}} <br>
-        {{post.body}} <br>
-        <b> Автор {{post.author.username}} </b> 
-        <br>
-    </div>    
+    
+        {% include '_post.html'  %}
     
     {% endfor %}
 {% endblock %}
