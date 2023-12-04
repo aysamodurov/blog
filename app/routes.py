@@ -16,11 +16,26 @@ def before_request():
 @app.route('/index')
 @login_required
 def index():
-    posts = current_user.followed_posts()
-    followed_users = current_user.followed.all()
-    
+    page = request.args.get('page', 1, type=int)
+    posts = current_user.followed_posts().paginate(
+        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False
+    )
+    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
 
-    return render_template('index.html', title='Добро пожаловать!', followed_users = followed_users, posts=posts)
+    followed_users = current_user.followed.all()
+    return render_template('index.html', title='Добро пожаловать!', followed_users = followed_users,
+                            posts=posts.items, prev_url=prev_url, next_url=next_url)
+
+@app.route('/explore')
+def explore():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.dt.desc()).paginate(
+        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+    prev_url = url_for('explore', page = posts.prev_num) if posts.has_prev else None
+    next_url = url_for('explore', page = posts.next_num) if posts.has_next else None
+    return render_template('index.html', title='Все посты', posts=posts.items, 
+                            prev_url=prev_url, next_url=next_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,10 +80,16 @@ def logout():
 @app.route('/profile/<username>')
 @login_required
 def profile(username):
+    page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first()
-    posts = user.posts
+    posts = user.posts.order_by(Post.dt.desc()).paginate(
+        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False
+    )
+    prev_url = url_for('profile',username=username, page=posts.prev_num) if posts.has_prev else None
+    next_url = url_for('profile', username=username, page=posts.next_num) if posts.has_next else None
     if user is not None:
-        return render_template('profile.html', user=user, posts=posts)
+        return render_template('profile.html', user=user,
+                                 posts=posts, prev_url=prev_url, next_url=next_url)
     else:
         flash('Пользователь {} не найден'.format(username))
 
@@ -122,8 +143,3 @@ def unfollow(id):
     current_user.unfollow(user)
     db.session.commit()
     return redirect(url_for('profile', username=user.username))
-
-@app.route('/explore')
-def explore():
-    posts = Post.query.order_by(Post.dt.desc()).all()
-    return render_template('index.html', title='Все посты', posts=posts)

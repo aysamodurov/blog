@@ -57,8 +57,9 @@
         <h2>Посты:</h2>
         <table>
             {% for post in posts %}
-            {% include '_post.html' %}
+                {% include '_post.html' %}
             {% endfor %}
+            {% include '_paginate.html'   %}
         </table>
     {% else %}
         <h2>Нет ни одного поста</h2>
