@@ -12,7 +12,7 @@
             <tr> <th scope="row">Имя:</th> <td>{{user.username}}</td>                   </tr>
             <tr> <th scope="row">Email:</th> <td>{{user.email}}</td>                    </tr> 
             <tr> <th scope="row">Обо мне:</th> <td>{{user.about_me}}</td>               </tr> 
-            <tr> <th scope="row">Был в сети:</th> <td>{{user.last_seen}}</td>           </tr> 
+            <tr> <th scope="row">Был в сети:</th> <td>{{moment(user.last_seen).format('LLL')}}</td>           </tr> 
             {% if followers %}
                 <tr> <th scope="row">Подписчики:</th> 
                     <td> 

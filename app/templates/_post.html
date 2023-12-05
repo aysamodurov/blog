@@ -1,10 +1,8 @@
 
 <div class="col-md-2">
     <table class="table table-hover">
-        <tr>
-            <td>{{post.body}} </td>
-        </tr>
-         
+        <tr> <td>{{post.body}} </td></tr>
+         <tr><td>{{ moment(post.dt).fromNow()}}</td></tr>
 
         {% if current_user == post.author %}
             <tr> <td><b> Автор {{post.author.username}} </b> </td> </tr>

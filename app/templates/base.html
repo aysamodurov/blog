@@ -1,9 +1,14 @@
 {% extends 'bootstrap/base.html' %}
+
+{% block scripts %}
+  {{super()}}
+  {{moment.include_moment()}}
+  {{ moment.lang('ru')}}
+{% endblock %}
   
-    {% block title %}
-        {% if title %} {{ title }}  {% else %} Добро пожаловать {% endif %}
- 
-   {% endblock %}
+{% block title %}
+  {% if title %} {{ title }}  {% else %} Добро пожаловать {% endif %}
+{% endblock %}
     
 
 {% block navbar %}
