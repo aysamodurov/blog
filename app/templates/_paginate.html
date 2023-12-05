@@ -1,7 +1,8 @@
-{% if prev_url %}
-    <a href="{{prev_url}}"> <<Назад </a>
-{% endif %}
 
-{% if next_url %}
-    <a href="{{next_url}}">Вперед>> </a>
-{% endif %}
+
+  <nav aria-label="...">
+    <ul class="pager">
+      {% if prev_url %}<li class="previous"><a href="{{prev_url}}"> Назад </a><span aria-hidden="true">&larr;</span> </a></li>{% endif %}
+      {% if next_url %}<li class="next"><a href="{{next_url}}"> Вперед </a><span aria-hidden="true">&rarr;</span></a></li>{% endif %}
+    </ul>
+  </nav>

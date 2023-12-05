@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf   %}
 
 {% block content %}
-    {% if followed_users %}
-        <h2>Посты от пользователей:</h2>
-        {% for miniuser in followed_users %}
-            {% include '_miniuser.html'   %}
-        {% endfor %}
 
+    {% if form %}
+    <h2>Новый пост</h2>
+        <div class="row">
+            <div class="col-md-4">
+                {{wtf.quick_form(form)}}
+            </div>
+    </div>
     {% endif %}
-    
 
     <h2>Последние новости</h2>
+    <div class="row">
     {% for post in posts %}
         {% include '_post.html'  %}
     {% endfor %}
-
+    </div>
+    
+    <br>
+    
     {% include '_paginate.html'   %}
+
 {% endblock %}

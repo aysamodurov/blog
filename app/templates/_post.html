@@ -1,13 +1,20 @@
-<div class="post" style="width: 300px; border: 1px; padding: 1px; margin: 5px; border-style: solid;">
-    <p>{{post.title}} </p>
-    <p>{{post.body}} </p>
-    
-    {% if current_user == post.author %}
-        <p><b> Автор {{post.author.username}} </b> </p>
-        <p><a href="{{url_for('delete_post', id=post.id)}}">Удалить</a></p>
-    {% else %}
-        <p><b> <a href="{{url_for('profile', username=post.author.username)}}">Автор {{post.author.username}} </a></b> </p>
-    {% endif %}
-    
-    <br>
-</div> 
+
+<div class="col-md-2">
+    <table class="table table-hover">
+        <tr>
+            <td>{{post.body}} </td>
+        </tr>
+         
+
+        {% if current_user == post.author %}
+            <tr> <td><b> Автор {{post.author.username}} </b> </td> </tr>
+            <tr> <td><a href="{{url_for('delete_post', id=post.id)}}">Удалить</td> </tr>
+        {% else %}
+            <tr> 
+                <td><b> <a href="{{url_for('profile', username=post.author.username)}}">Автор {{post.author.username}} </a></b> </td> 
+            </tr>
+            <tr></tr>
+        {% endif %}
+</table>   
+</div>    
+

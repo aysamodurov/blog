@@ -1,36 +1,11 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block content %}
-    <h1>редактирование профиля</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <table>
-
-            <tr>
-                <td> {{form.username.label}} </td>
-                <td> {{form.username(size=32)}} </td>
-                <td>
-                {% for error in form.username.errors %}
-                    <span style="color: red;">[{{error}}]</span>
-                {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td> {{form.about_me.label}} </td>
-                <td> {{form.about_me(cols=50, row=4)}} </td>
-                <td>
-                {% for error in form.about_me.errors %}
-                    <span style="color: red;">[{{error}}]</span>
-                {% endfor %}
-                </td>
-            </tr>
-
-            <tr>
-                <td>{{form.submit()}}</td>
-            </tr>
-
-        </table>
-        
-    </form>
+    <h1>Редактирование профиля</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{wtf.quick_form(form)}}
+        </div>
+    </div>
 {% endblock %}

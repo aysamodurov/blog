@@ -44,6 +44,5 @@ class EditForm(FlaskForm):
 
 
 class AddPostForm(FlaskForm):
-    title = StringField('Заголовок', validators=[DataRequired()])
     body = TextAreaField('Сообщение', validators=[Length(min=0, max=200)])
     submit = SubmitField('Опубликовать')
