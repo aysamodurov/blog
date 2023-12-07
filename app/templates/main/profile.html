@@ -17,7 +17,7 @@
                 <tr> <th scope="row">Подписчики:</th> 
                     <td> 
                         {% for follower in followers %}
-                            <a href="{{url_for('profile', username=follower.username)}}">{{follower.username}}</a>
+                            <a href="{{url_for('main.profile', username=follower.username)}}">{{follower.username}}</a>
                         {% endfor %}
                     </td>  
                 </tr>
@@ -26,16 +26,16 @@
             {% endif %} 
                 {% if user == current_user %}
             <tr>
-                <td><a href="{{url_for('edit_profile')}}">Изменить </a></td>  
-                <td><a href="{{url_for('add_post')}}">Новый пост</a></td>
+                <td><a href="{{url_for('main.edit_profile')}}">Изменить </a></td>  
+                <td><a href="{{url_for('main.add_post')}}">Новый пост</a></td>
             </tr>
             {% elif current_user.is_following(user) %}
                 <tr>
-                    <td><a href="{{url_for('unfollow', id=user.id)}}">Отписаться</a></td>
+                    <td><a href="{{url_for('main.unfollow', id=user.id)}}">Отписаться</a></td>
                 </tr>
             {% else %}
                 <tr>
-                    <td><a href="{{url_for('follow', id=user.id)}}">Подписаться</a></td>
+                    <td><a href="{{url_for('main.follow', id=user.id)}}">Подписаться</a></td>
                 </tr>
             {% endif %}
             

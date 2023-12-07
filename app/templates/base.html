@@ -22,29 +22,29 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{url_for('explore')}}">Все посты</a>
+      <a class="navbar-brand" href="{{url_for('main.explore')}}">Все посты</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{{url_for('index')}}">Моя лента <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="{{url_for('main.index')}}">Моя лента <span class="sr-only">(current)</span></a></li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
 
         {% if current_user.is_anonymous %}
-            <li><a href="{{url_for('login')}}">Войти</a></li>
-            <li><a href="{{url_for('register')}}">Регистрация</a></li>
+            <li><a href="{{url_for('auth.login')}}">Войти</a></li>
+            <li><a href="{{url_for('auth.register')}}">Регистрация</a></li>
             
         {% else %}
         
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Профиль <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="{{url_for('profile', username=current_user.username)}}">Мой профиль</a></li>  
+                <li><a href="{{url_for('main.profile', username=current_user.username)}}">Мой профиль</a></li>  
                 <li role="separator" class="divider"></li>
-                <li><a href="{{url_for('logout')}}">Выйти</a></li> 
+                <li><a href="{{url_for('auth.logout')}}">Выйти</a></li> 
             </ul>
           </li>
          
