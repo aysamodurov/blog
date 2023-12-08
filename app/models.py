@@ -12,11 +12,11 @@ followers = db.Table('followers',
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
-    email= db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String(32), unique=True, nullable=False)
+    password = db.Column(db.String(162), nullable=False)
+    email= db.Column(db.String(64), unique=True, nullable=False)
     last_seen =db.Column(db.DateTime,default=datetime.utcnow)
-    about_me = db.Column(db.String)
+    about_me = db.Column(db.String(256))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     followed = db.relationship(
         'User', secondary=followers,
@@ -59,7 +59,7 @@ def load_user(user_id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String, nullable=False)
+    body = db.Column(db.String(256), nullable=False)
     dt =db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
