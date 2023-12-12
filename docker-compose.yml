@@ -1,0 +1,29 @@
+version: '3'
+services:
+  flask:
+    build: .
+    container_name: blog-app
+    environment:
+      - PYTHONUNBUFFERED=True
+      - DATABASE_URL=mysql+pymysql://blog:bx6q!HchQzwa0@127.0.0.1:3307/blog                   
+    restart: on-failure
+    volumes:
+      - .:/blog
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    command: gunicorn -b :5000 --access-logfile - --error-logfile - app:app
+  db:
+    image: mysql
+    container_name: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: blog
+      MYSQL_USER: blog
+      MYSQL_PASSWORD: bx6q!HchQzwa0
+      MYSQL_ROOT_PASSWORD: 568Temloc!905
